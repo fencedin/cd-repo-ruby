@@ -17,30 +17,25 @@ class Collection
   end
 
   def Collection.search_for_artist(artist_search_term)
-    result = ''
+    result = []
     @@collections.each do |col|
-      col.artists.each do |art|
-        if art.artist.start_with?(artist_search_term)
-          result += "(" + col.name_of_collection + ") " + art.artist + ": " + art.albums.map { |album| album.album_name }.join(", ")
-        end
-      end
+      result << col.artists.select { |art| art.artist.start_with?(artist_search_term)}
     end
     result
   end
 
   def Collection.search_for_album(album_search_term)
-    result = ''
+    result = []
     @@collections.each do |col|
       col.artists.each do |art|
-        art.albums.each do |alb|
-          puts "herereerere"
-          if alb.album_name.start_with?(album_search_term)
-            result += "(" + col.name_of_collection + ") " + art.artist + ": " + alb.album_name
-          end
-        end
+        result << art.albums.select { |alb| alb.album_name.start_with?(album_search_term)}
       end
     end
     result
+  end
+
+  def Collection.search(search_collection_term)
+    @@collections.select { |col| col.name_of_collection == search_collection_term}
   end
 
   def initialize(name_of_collection)
@@ -52,9 +47,9 @@ class Collection
     @@collections << self
   end
 
-  def create_artist_album(artist, album)
-    new_artist = Artist.create(artist)
-    new_album = new_artist.create_album(album)
+  def create_artist_album(art, alb)
+    new_artist = Artist.create(art)
+    new_album = new_artist.create_album(alb)
     add_album(new_artist)
     new_artist
   end

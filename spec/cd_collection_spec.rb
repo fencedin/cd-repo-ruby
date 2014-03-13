@@ -70,7 +70,8 @@ describe 'Collection' do
       cd_two = new_collection.create_artist_album("John Coltrane", 'Jazz Blues')
       Collection.all.should eq [new_collection]
       new_collection.artists.should eq [cd_one, cd_two]
-      Collection.search_for_artist('M').should eq "(Jazz) Miles Davis: Blue"
+      Collection.search_for_artist('M').should eq [[cd_one]]
+      Collection.search_for_artist("Lady Gaga").should eq [[]]
     end
   end
 
@@ -78,7 +79,14 @@ describe 'Collection' do
     it 'returns artist who made the album' do
       new_collection = Collection.create("Rock")
       cd_one = new_collection.create_artist_album("Bruce", "Born in the USA")
-      Collection.search_for_album("Born").should eq "(Rock) Bruce: Born in the USA"
+      Collection.search_for_album("Born").should eq [cd_one.albums]
+    end
+  end
+  describe '.search' do
+    it 'returns a collection or nil' do
+      new_collection = Collection.create("Pop")
+      Collection.search("Pop").should eq [new_collection]
+      Collection.search("Rock").should eq []
     end
   end
 
