@@ -1,5 +1,5 @@
 class Collection
-  attr_reader :name_of_collection, :the_CD
+  attr_reader :name_of_collection, :the_CD, :cds
   @@collections = []
 
   def Collection.create(name_of_collection)
@@ -23,6 +23,7 @@ class Collection
 
   def initialize(name_of_collection)
     @name_of_collection = name_of_collection
+    @cds = []
   end
 
   def save
@@ -34,5 +35,8 @@ class Collection
     @the_CD
   end
 
+  def add_CD(a_CD)
+    @cds << a_CD
+  end
 
 end

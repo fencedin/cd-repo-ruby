@@ -60,6 +60,15 @@ describe 'Collection' do
     end
   end
 
+  describe '#add_CD' do
+    it 'adds a created CD to the CD Array' do
+      new_collection = Collection.create("Pop")
+      new_CD = new_collection.create_CD("Justin Timberlake", "20/20 Experience")
+      new_collection.add_CD(new_CD)
+      new_collection.cds.should eq [new_CD]
+    end
+  end
+
   # describe '.search_for_artist' do
   #   it 'returns cds by this artist' do
   #     new_collection = Collection.create("Jazz")
