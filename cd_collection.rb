@@ -1,5 +1,6 @@
 require './lib/collection'
-require './lib/cd'
+require './lib/artist'
+require './lib/album'
 
 def main_menu
   puts "****************************************"
@@ -10,7 +11,8 @@ def main_menu
   puts "* 'a' to search for all CDs by artist  *"
   puts "* 'x' to exit                          *"
   puts "****************************************"
-
+  puts "\n"
+  main_choice = gets.chomp
 
 
 

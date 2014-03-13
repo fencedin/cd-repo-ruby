@@ -3,82 +3,86 @@ require 'collection'
 require 'artist'
 require 'album'
 
-# describe 'Collection' do
-#   before do
-#     Collection.clear
-#     CD.clear
-#     Album.clear
-#   end
-#   it 'is an empty collection to start' do
-#     new_collection = Collection.new('Oldies')
-#     new_collection.should be_an_instance_of Collection
-#   end
+describe 'Collection' do
+  before do
+    Collection.clear
+    Artist.clear
+    Album.clear
+  end
+  it 'is an empty collection to start' do
+    new_collection = Collection.new('Oldies')
+    new_collection.should be_an_instance_of Collection
+  end
 
-#   it 'has a name when it is created' do
-#     new_collection = Collection.new("Punk")
-#     new_collection.name_of_collection.should eq "Punk"
-#   end
+  it 'has a name when it is created' do
+    new_collection = Collection.new("Punk")
+    new_collection.name_of_collection.should eq "Punk"
+  end
 
-#   describe '.create' do
-#     it 'creates a new intance of collection' do
-#       new_collection = Collection.create('New Age')
-#       new_collection.should be_an_instance_of Collection
-#     end
-#   end
+  describe '.create' do
+    it 'creates a new intance of collection' do
+      new_collection = Collection.create('New Age')
+      new_collection.should be_an_instance_of Collection
+    end
+  end
 
-#   describe '#save' do
-#     it 'saves a new collection to the class array of collections' do
-#       new_collection = Collection.create("Rockabilly")
-#       Collection.all.should eq [new_collection]
-#     end
-#   end
+  describe '#save' do
+    it 'saves a new collection to the class array of collections' do
+      new_collection = Collection.create("Rockabilly")
+      Collection.all.should eq [new_collection]
+    end
+  end
 
-#   describe '.all' do
-#     it 'calls the class array of collections' do
-#       Collection.all.should eq []
-#     end
-#   end
+  describe '.all' do
+    it 'calls the class array of collections' do
+      Collection.all.should eq []
+    end
+  end
 
-#   describe '.clear' do
-#     it 'clears the collections array' do
-#       new_collection = Collection.create("k-pop")
-#       Collection.clear
-#       Collection.all.should eq []
-#     end
-#   end
+  describe '.clear' do
+    it 'clears the collections array' do
+      new_collection = Collection.create("k-pop")
+      Collection.clear
+      Collection.all.should eq []
+    end
+  end
 
-#   describe '#create_CD' do
-#     it 'creates a new CD in a CD collection' do
-#       new_collection = Collection.create("Country")
-#       new_collection.create_CD("Garth Brooks", "Thunder")
-#       new_collection.the_CD.should be_an_instance_of CD
-#     end
-#     it 'has an artist name' do
-#       new_collection= Collection.create('Rock')
-#       new_collection.create_CD("Björk", 'Icelandia')
-#       new_collection.the_CD.artist.artist_name.should eq "Björk"
-#     end
-#   end
+  describe '#create_artist_album' do
+    it 'creates a new CD in a CD collection' do
+      new_collection = Collection.create("Country")
+      new_album = new_collection.create_artist_album("Garth Brooks", "Thunder")
+      new_album.should be_an_instance_of Artist
+    end
+  end
 
-#   describe '#add_CD' do
-#     it 'adds a created CD to the CD Array' do
-#       new_collection = Collection.create("Pop")
-#       new_CD = new_collection.create_CD("Justin Timberlake", "20/20 Experience")
-#       new_collection.add_CD(new_CD)
-#       new_collection.cds.should eq [new_CD]
-#     end
-#   end
+  describe '#add_album' do
+    it 'adds a created album to the album array' do
+      new_collection = Collection.create("Pop")
+      new_artist = new_collection.create_artist_album("Justin Timberlake", "20/20 Experience")
+      new_collection.artists.should eq [new_artist]
+    end
+  end
 
-#   # describe '.search_for_artist' do
-#   #   it 'returns cds by this artist' do
-#   #     new_collection = Collection.create("Jazz")
-#   #     cd_one = new_collection.create_CD("Miles Davis", "Blue")
-#   #     cd_two = new_collection.create_CD("John Coltrane", 'Jazz Blues')
-#   #     Collection.search_for_artist('M').should eq [cd_one]
-#   #   end
-#   # end
+  describe '.search_for_artist' do
+    it 'returns artist and their albums in any collection' do
+      new_collection = Collection.create("Jazz")
+      cd_one = new_collection.create_artist_album("Miles Davis", "Blue")
+      cd_two = new_collection.create_artist_album("John Coltrane", 'Jazz Blues')
+      Collection.all.should eq [new_collection]
+      new_collection.artists.should eq [cd_one, cd_two]
+      Collection.search_for_artist('M').should eq "(Jazz) Miles Davis: Blue"
+    end
+  end
 
-# end
+  describe '.search_for_album' do
+    it 'returns artist who made the album' do
+      new_collection = Collection.create("Rock")
+      cd_one = new_collection.create_artist_album("Bruce", "Born in the USA")
+      Collection.search_for_album("Born").should eq "(Rock) Bruce: Born in the USA"
+    end
+  end
+
+end
 
 describe 'Artist' do
   before do
