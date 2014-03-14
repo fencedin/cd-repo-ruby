@@ -28,7 +28,11 @@ class Collection
     result = []
     @@collections.each do |col|
       col.artists.each do |art|
-        result << art.albums.select { |alb| alb.album_name.start_with?(album_search_term)}
+        art.albums.each do |alb|
+          if alb.album_name.start_with?(album_search_term)
+            result << art
+          end
+        end
       end
     end
     result

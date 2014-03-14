@@ -79,7 +79,7 @@ describe 'Collection' do
     it 'returns artist who made the album' do
       new_collection = Collection.create("Rock")
       cd_one = new_collection.create_artist_album("Bruce", "Born in the USA")
-      Collection.search_for_album("Born").should eq [cd_one.albums]
+      Collection.search_for_album("Born").should eq [cd_one]
     end
   end
   describe '.search' do
